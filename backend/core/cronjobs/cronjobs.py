@@ -23,6 +23,7 @@ def send_favorite_events_notifications():
             elif remaining_time_hour <= 24:
                 message = f'Faltam {int(remaining_time_hour)} horas para sua reunião começar'
             if message:
-                device.send_message(
+                response = device.send_message(
                     Message(notification=Notification(title=f"Lembrete para o evento {event.name}", body=message)))
+                print(response)
                 print('message sent')
