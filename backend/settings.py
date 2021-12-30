@@ -138,7 +138,7 @@ cred = firebase_admin.credentials.Certificate(os.path.join(BASE_DIR, 'firebase_c
 firebase_admin.initialize_app(cred)
 
 FCM_DJANGO_SETTINGS = {
-    "ONE_DEVICE_PER_USER": True,
+    "ONE_DEVICE_PER_USER": False,
     "DELETE_INACTIVE_DEVICES": False,
     "UPDATE_ON_DUPLICATE_REG_ID": True,
 }
