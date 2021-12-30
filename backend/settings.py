@@ -45,8 +45,6 @@ INSTALLED_APPS = [
     'rest_framework.authtoken',
     'drf_generators',
     "fcm_django",
-    'django_crontab',
-
 ]
 
 MIDDLEWARE = [
@@ -140,7 +138,4 @@ FCM_DJANGO_SETTINGS = {
     "DELETE_INACTIVE_DEVICES": False,
     "UPDATE_ON_DUPLICATE_REG_ID": True,
 }
-CRONJOBS = [
-    ('*/1 * * * *', 'core.cronjobs.cronjobs.send_favorite_events_notifications')
-]
 django_heroku.settings(locals())
