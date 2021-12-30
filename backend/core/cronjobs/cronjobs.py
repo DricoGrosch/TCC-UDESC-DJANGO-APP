@@ -9,6 +9,7 @@ sched = BlockingScheduler()
 
 @sched.scheduled_job('interval', minutes=1)
 def send_favorite_events_notifications():
+    print('scheduler called')
     for device in FCMDevice.objects.filter(active=True):
         for event in device.user.event_set.all():
             remaining_time_min = (event.date.replace(tzinfo=None) - datetime.now().replace(
