@@ -2,8 +2,12 @@ from datetime import datetime
 
 from fcm_django.models import FCMDevice
 from firebase_admin.messaging import Message, Notification
+from apscheduler.schedulers.blocking import BlockingScheduler
+
+sched = BlockingScheduler()
 
 
+@sched.scheduled_job('interval', minutes=1)
 def send_favorite_events_notifications():
     for device in FCMDevice.objects.filter(active=True):
         for event in device.user.event_set.all():
@@ -20,3 +24,4 @@ def send_favorite_events_notifications():
             if message:
                 device.send_message(
                     Message(notification=Notification(title=f"Lembrete para o evento {event.name}", body=message)))
+sched.start()
