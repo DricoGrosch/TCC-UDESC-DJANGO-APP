@@ -1,2 +1,3 @@
 web: gunicorn backend.wsgi
-heroku ps:scale clock=1
+clock: python backend.core.cronjobs.cronjobs.py
+
