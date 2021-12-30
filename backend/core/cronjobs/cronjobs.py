@@ -25,3 +25,4 @@ def send_favorite_events_notifications():
             if message:
                 device.send_message(
                     Message(notification=Notification(title=f"Lembrete para o evento {event.name}", body=message)))
+                print('message sent')
