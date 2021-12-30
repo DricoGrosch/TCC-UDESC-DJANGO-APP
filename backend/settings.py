@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 import os
 from pathlib import Path
 
+import django_heroku
 import firebase_admin
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -142,3 +143,4 @@ FCM_DJANGO_SETTINGS = {
 CRONJOBS = [
     ('*/1 * * * *', 'core.cronjobs.cronjobs.send_favorite_events_notifications')
 ]
+django_heroku.settings(locals())
