@@ -3,10 +3,11 @@ import datetime
 from rest_framework.viewsets import ModelViewSet
 
 from backend.core.api.v1.serializers.event_serializer import EventSerializer, EventShortSerializer
+from backend.core.api.v1.viewsets.login_required_model_viewset import LoginRequiredModelViewSet
 from backend.core.models import Event
 
 
-class EventViewSet(ModelViewSet):
+class EventViewSet(LoginRequiredModelViewSet):
     queryset = Event.objects.order_by('pk')
 
     def get_serializer_class(self):
@@ -25,3 +26,7 @@ class EventViewSet(ModelViewSet):
         if year:
             queryset = queryset.filter(date__year=year)
         return queryset
+
+    def create(self, request, *args, **kwargs):
+        self.request.data['owner'] = self.request.user.id
+        return super(EventViewSet, self).create(request, *args, **kwargs)
