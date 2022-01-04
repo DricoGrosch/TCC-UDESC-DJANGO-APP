@@ -1,4 +1,4 @@
-from datetime import datetime
+import datetime
 
 from fcm_django.models import FCMDevice
 from firebase_admin.messaging import Message, Notification
@@ -11,9 +11,13 @@ sched = BlockingScheduler()
 def send_favorite_events_notifications():
     print('scheduler called')
     for device in FCMDevice.objects.filter(active=True):
+        today = datetime.datetime.now()
         for event in device.user.event_set.filter(favorite=True):
-            remaining_time_min = (event.date.replace(tzinfo=None) - datetime.now().replace(
-                tzinfo=None)).total_seconds() / 60
+            # o filtro da query é meio zoado pro que eu quero
+            event_date = event.date.replace(tzinfo=None)
+            if event_date < today:
+                continue
+            remaining_time_min = (event_date - today).total_seconds() / 60
             remaining_time_hour = remaining_time_min / 60
             message = ''
             if remaining_time_min <= 5:
