@@ -8,9 +8,8 @@ class IDUdescAuthBackend(BaseBackend):
 
     def create_user(self, username, password):
         user, created = get_user_model().objects.get_or_create(username=username)
-        if created:
-            user.set_password(password)
-            user.save()
+        user.set_password(password)
+        user.save()
         return user
 
     def authenticate(self, request, username=None, password=None):
