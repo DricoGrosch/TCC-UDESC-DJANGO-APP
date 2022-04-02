@@ -19,9 +19,10 @@ class EventViewSet(LoginRequiredModelViewSet):
         return EventSerializer
 
     def get_queryset(self):
-        my_private_events = self.request.user.event_set.filter(public=False)
+        my_private_events_as_owner = self.request.user.event_set.filter(public=False)
+        my_private_events_as_member = self.request.user.member_set.filter(public=False)
         public_events = Event.objects.filter(public=True)
-        return my_private_events | public_events
+        return (my_private_events_as_owner | my_private_events_as_member | public_events).distinct()
 
     def filter_queryset(self, queryset):
         year = self.request.query_params.get('year', '')

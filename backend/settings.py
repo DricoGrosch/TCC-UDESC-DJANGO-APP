@@ -86,12 +86,13 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': 'db.sqlite3',
-        # 'PASSWORD': '123',
-        # 'HOST': '',
-        # 'PORT': '',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'calenudesc_dev',
+        'PASSWORD': '123',
+        'HOST': '',
+        'PORT': '',
         # 'USER': 'sfzspyqjqymdgl',
+        'USER': 'postgres',
     }
 }
 
