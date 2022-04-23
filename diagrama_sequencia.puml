@@ -1,0 +1,19 @@
+@startuml proxy-auth-sequence
+
+autonumber 1
+
+activate User
+User --> Server: Sends authentication request
+activate Server
+  Server --> IdUDESC: Send authentication request \n with credentials
+
+activate IdUDESC
+  IdUDESC --> IdUDESC: Validate credentials
+  IdUDESC --> Server: Send authentication response
+
+deactivate IdUDESC
+  Server --> Server: Create authentication token
+  Server --> User: Send response
+deactivate Server
+  User --> User: Set token on device preferences
+@enduml

@@ -1,0 +1,19 @@
+@startuml
+class Event {
+    date: Datetime
+    name: String
+    public: Boolean
+    online: Boolean
+    link: String
+    protocol: String
+    guide: String
+    all_members_can_edit: Boolean
+}
+
+class User {
+}
+
+Event <-- User
+Event o-- User
+
+@enduml

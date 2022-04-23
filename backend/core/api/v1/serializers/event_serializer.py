@@ -1,6 +1,6 @@
 from django.contrib.auth import get_user_model
 from django.db import transaction
-from rest_framework.fields import ListField
+from rest_framework.fields import ListField, SerializerMethodField
 from rest_framework.serializers import ModelSerializer
 
 from backend.core.api.v1.serializers.attachment_serializer import AttachmentSerializer
@@ -12,6 +12,13 @@ class EventDetailSerializer(ModelSerializer):
     attachments = AttachmentSerializer(many=True, read_only=True, source='attachment_set')
     members = UserSerializer(many=True, read_only=True)
     owner = UserSerializer()
+    users_who_favorited = SerializerMethodField()
+
+    def get_users_who_favorited(self, instance):
+        favorite_events = instance.favoriteevent_set.all()
+        users_who_favorited = list(
+            map(lambda favorite_event: UserSerializer(favorite_event.user).data, favorite_events))
+        return users_who_favorited
 
     class Meta:
         model = Event
@@ -49,7 +56,7 @@ class EventSerializer(ModelSerializer):
         try:
             with transaction.atomic():
                 members = validated_data.pop('_members')
-                self.instance = super(EventSerializer, self).update(instance,validated_data)
+                self.instance = super(EventSerializer, self).update(instance, validated_data)
                 self.set_members(members)
                 return self.instance
         except Exception as e:
@@ -59,4 +66,4 @@ class EventSerializer(ModelSerializer):
 class EventShortSerializer(ModelSerializer):
     class Meta:
         model = Event
-        fields = ['id', 'name', 'date', 'online', 'public', 'favorite']
+        fields = ['id', 'name', 'date', 'online', 'public']

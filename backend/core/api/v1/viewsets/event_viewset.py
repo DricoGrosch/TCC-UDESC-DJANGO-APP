@@ -1,7 +1,3 @@
-import datetime
-
-from rest_framework.viewsets import ModelViewSet
-
 from backend.core.api.v1.serializers.event_serializer import EventSerializer, EventShortSerializer, \
     EventDetailSerializer
 from backend.core.api.v1.viewsets.login_required_model_viewset import LoginRequiredModelViewSet
