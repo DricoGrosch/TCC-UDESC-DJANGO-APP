@@ -3,7 +3,7 @@ from datetime import datetime
 from django.urls import reverse_lazy
 from rest_framework.status import HTTP_200_OK, HTTP_201_CREATED
 
-from backend.core.models import Event
+from backend.core.models import Event, FavoriteEvent
 from backend.core.tests.integration.authenticated_test_case import AuthenticatedTestCase
 
 
@@ -29,14 +29,34 @@ class EventTestCase(AuthenticatedTestCase):
 
         self.assertEqual(response.status_code, HTTP_201_CREATED)
         self.assertTrue('id' in response.json())
+
     def test_update_event(self):
         event = Event.objects.get(name='event 1')
-        response = self.client.put(reverse_lazy('event-detail', kwargs={'pk': event.id}),{
-            'name':'event 1 updated',
-            'date':'2020-02-02 08:00'
+        response = self.client.put(reverse_lazy('event-detail', kwargs={'pk': event.id}), {
+            'name': 'event 1 updated',
+            'date': '2020-02-02 08:00',
+            'guide': 'added guide',
+            'protocol': 'added protocol',
+
         })
         self.assertEqual(response.status_code, HTTP_200_OK)
-        response_data=response.json()
-        self.assertEqual(response_data['name'],'event 1 updated')
-        self.assertEqual(response_data['date'],'2020-02-02T08:00:00Z')
+        response_data = response.json()
+        self.assertEqual(response_data['name'], 'event 1 updated')
+        self.assertEqual(response_data['date'], '2020-02-02T08:00:00Z')
+        self.assertEqual(response_data['guide'], 'added guide')
+        self.assertEqual(response_data['protocol'], 'added protocol')
 
+    def test_mark_as_favorite(self):
+        event = Event.objects.get(name='event 1')
+        response = self.client.post(reverse_lazy('mark_as_favorite', kwargs={'event_id': event.id}), {
+            'user': self.user.id
+        })
+        self.assertEqual(response.status_code, HTTP_201_CREATED)
+
+    def test_unmark_as_favorite(self):
+        event = Event.objects.get(name='event 1')
+        FavoriteEvent.objects.create(event=event, user=self.user)
+        response = self.client.post(reverse_lazy('unmark_as_favorite', kwargs={'event_id': event.id}), {
+            'user': self.user.id
+        })
+        self.assertEqual(response.status_code, HTTP_200_OK)

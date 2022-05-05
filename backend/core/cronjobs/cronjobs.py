@@ -4,6 +4,8 @@ from fcm_django.models import FCMDevice
 from firebase_admin.messaging import Message, Notification
 from apscheduler.schedulers.blocking import BlockingScheduler
 
+from backend.core.models import FavoriteEvent
+
 sched = BlockingScheduler()
 
 
@@ -12,6 +14,7 @@ def send_favorite_events_notifications():
     print('scheduler called')
     for device in FCMDevice.objects.filter(active=True):
         today = datetime.datetime.now()
+        # FavoriteEvent.objects.filter(user=device.user)
         for event in device.user.event_set.filter(favorite=True):
             # o filtro da query é meio zoado pro que eu quero
             event_date = event.date.replace(tzinfo=None)

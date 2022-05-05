@@ -1,18 +1,32 @@
 @startuml
+skinparam classAttributeIconSize 0
 class Event {
-    date: Datetime
-    name: String
-    public: Boolean
-    online: Boolean
-    link: String
-    protocol: String
-    guide: String
-    all_members_can_edit: Boolean
+    +date: DateTimeField
+    +name: CharField
+    +public: BooleanField
+    +online: BooleanField
+    +link: CharField
+    +protocol: TextField
+    +guide: TextField
+    +all_members_can_edit: BooleanField
 }
 
 class User {
++username : CharField
++first_name : CharField
++last_name : CharField
++email : CharField
++date_joined : DateTimeField
 }
-
+class Attachment {
+    +file : File
+    +upload_date : DateTimeField
+}
+class FavoriteEvent {
+}
+Event <-- FavoriteEvent
+User <-- FavoriteEvent
+Event <-- Attachment
 Event <-- User
 Event o-- User
 

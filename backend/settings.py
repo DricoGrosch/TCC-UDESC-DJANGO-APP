@@ -45,6 +45,8 @@ INSTALLED_APPS = [
     'rest_framework.authtoken',
     'drf_generators',
     "fcm_django",
+    'django_extensions',
+
 ]
 
 MIDDLEWARE = [

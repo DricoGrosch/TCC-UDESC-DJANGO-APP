@@ -66,4 +66,12 @@ class EventSerializer(ModelSerializer):
 class EventShortSerializer(ModelSerializer):
     class Meta:
         model = Event
-        fields = ['id', 'name', 'date', 'online', 'public']
+        fields = ['id', 'name', 'date', 'online', 'public', 'users_who_favorited']
+
+    users_who_favorited = SerializerMethodField()
+
+    def get_users_who_favorited(self, instance):
+        favorite_events = instance.favoriteevent_set.all()
+        users_who_favorited = list(
+            map(lambda favorite_event: UserSerializer(favorite_event.user).data, favorite_events))
+        return users_who_favorited

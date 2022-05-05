@@ -19,12 +19,12 @@ urlpatterns = [
     path('event/<int:event_id>/attachment/',
          AttachmentViewSet.as_view({
              'get': 'list',
-             'put': 'update',
              'post': 'create',
-         })),
+         }),name='attachment-list'),
     path('event/<int:event_id>/attachment/<int:pk>/',
          AttachmentViewSet.as_view({
+             'put': 'update',
              'delete': 'destroy',
-         })),
+         }),name='attachment-detail'),
     *router.urls,
 ]
