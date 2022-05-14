@@ -16,6 +16,7 @@ import django_heroku
 import firebase_admin
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
+from decouple import config
 from firebase_admin.messaging import Notification
 
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -149,3 +150,10 @@ FCM_DJANGO_SETTINGS = {
     "UPDATE_ON_DUPLICATE_REG_ID": True,
 }
 django_heroku.settings(locals())
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp-mail.outlook.com'
+EMAIL_HOST_USER = config("EMAIL_HOST_USER")
+EMAIL_HOST_PASSWORD = config("EMAIL_HOST_PASSWORD")
