@@ -17,17 +17,12 @@ class AccountCreationTokenValidationAPIView(APIView):
         response = None
         try:
             key = self.request.data.pop('token')
-            device_token = self.request.data.pop('device_token')
             token = AccountCreationToken.objects.get(key=key)
             if not token.is_valid():
                 raise Exception('Token invalid')
             token.use()
-            user, created = User.objects.get_or_create(username=token.email)
-            token, created = Token.objects.get_or_create(user=user)
-            FCMDevice.objects.get_or_create(user=user, registration_id=device_token)
+            response = Response({'ok': True}, status=HTTP_200_OK)
 
-            response_dict = {**UserSerializer(user, context={"request": self.request}).data, 'token': token.key}
-            response = Response(response_dict, status=HTTP_200_OK)
         except:
             response = Response({'error': 'Token invalid'}, status=HTTP_401_UNAUTHORIZED)
         finally:

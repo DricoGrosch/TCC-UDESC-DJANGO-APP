@@ -63,7 +63,6 @@ MIDDLEWARE = [
 ROOT_URLCONF = 'backend.urls'
 AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
-    'backend.core.management.auth_backends.id_udesc_auth_backend.IDUdescAuthBackend',
 ]
 TEMPLATES = [
     {

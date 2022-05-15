@@ -29,6 +29,5 @@ class AccountCreationToken(models.Model):
         return random.randint(10000, 99999)
 
     def is_valid(self):
-        return True
-        # in_time_range = ((timezone.now() - self.created_at).total_seconds() / 60) < self.expiration_time_limit
-        # return in_time_range and not self.used
+        in_time_range = ((timezone.now() - self.created_at).total_seconds() / 60) < self.expiration_time_limit
+        return in_time_range and not self.used
