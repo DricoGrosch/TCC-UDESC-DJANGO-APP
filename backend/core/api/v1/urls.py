@@ -6,6 +6,7 @@ from backend.core.api.v1.api_views.account_creation_request_token_api_view impor
 from backend.core.api.v1.api_views.account_creation_token_validation_api_view import \
     AccountCreationTokenValidationAPIView
 from backend.core.api.v1.api_views.mark_as_favorite_api_view import MarkAsFavoriteAPIView
+from backend.core.api.v1.api_views.password_change_api_view import PasswordChangeAPIView
 from backend.core.api.v1.api_views.unmark_as_favorite_api_view import UnmarkAsFavoriteAPIView
 from backend.core.api.v1.api_views.user_creation_api_view import UserCreationFromEmailAPIView
 from backend.core.api.v1.viewsets import *
@@ -25,6 +26,7 @@ urlpatterns = [
          name='check_account_creation_token'),
 
     path('user_creation_from_email/', UserCreationFromEmailAPIView.as_view(), name='user_creation_from_email'),
+    path('change_password/', PasswordChangeAPIView.as_view(), name='change_password'),
 
     path('event/<int:event_id>/attachment/',
          AttachmentViewSet.as_view({

@@ -1,12 +1,13 @@
 from rest_framework import status
 from rest_framework.authtoken.views import ObtainAuthToken
 from rest_framework.response import Response
+from rest_framework.views import APIView
 
 from backend.core.api.v1.serializers.favorite_event_serializer import FavoriteEventSerializer
 from backend.core.models import FavoriteEvent
 
 
-class MarkAsFavoriteAPIView(ObtainAuthToken):
+class MarkAsFavoriteAPIView(APIView):
     def post(self, *args, **kwargs):
         event_id = self.kwargs['event_id']
         user_id = self.request.data['user']
