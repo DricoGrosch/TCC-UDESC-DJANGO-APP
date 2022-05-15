@@ -16,4 +16,3 @@ class PasswordChangeAPIView(LoginRequiredAPIView):
         self.request.user.save()
         serializer = UserSerializer(self.request.user, context={'request': self.request})
         return Response(serializer.data, status=HTTP_200_OK)
-
