@@ -18,8 +18,8 @@ urlpatterns = [
     path('login/', LoginAPIView.as_view(), name='login'),
     path('event/<int:event_id>/mark_favorite/', MarkAsFavoriteAPIView.as_view(), name='mark_as_favorite'),
     path('event/<int:event_id>/unmark_favorite/', UnmarkAsFavoriteAPIView.as_view(), name='unmark_as_favorite'),
-    path('get_account_creation_token/', AccountCreationRequestTokenAPIView.as_view()),
-    path('check__account_creation_token/', AccountCreationTokenValidationAPIView.as_view(), name='unmark_as_favorite'),
+    path('get_account_creation_token/', AccountCreationRequestTokenAPIView.as_view(),name='get_account_creation_token'),
+    path('check_account_creation_token/', AccountCreationTokenValidationAPIView.as_view(), name='check_account_creation_token'),
 
     path('event/<int:event_id>/attachment/',
          AttachmentViewSet.as_view({
