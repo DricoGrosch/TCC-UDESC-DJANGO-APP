@@ -1,5 +1,6 @@
 from django.contrib.auth import get_user_model
 from django.db import transaction
+from rest_framework.authtoken.models import Token
 from rest_framework.fields import ListField, SerializerMethodField
 from rest_framework.serializers import ModelSerializer
 
@@ -37,6 +38,7 @@ class EventSerializer(ModelSerializer):
         self.instance.members.clear()
         for cnpj in members:
             user, created = get_user_model().objects.get_or_create(username=cnpj)
+            token, created = Token.objects.get_or_create(user=user)
             if created:
                 user.first_name = cnpj
                 user.save()

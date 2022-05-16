@@ -13,6 +13,7 @@ from backend.core.api.v1.serializers.user_serializer import UserSerializer
 class UserCreationFromEmailAPIView(APIView):
     def post(self, *args, **kwargs):
         device_token = self.request.data.pop('device_token')
+        user = None
         try:
             try:
                 user = User.objects.get(username=self.request.data['username'])
