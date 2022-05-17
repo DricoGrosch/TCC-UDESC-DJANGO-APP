@@ -16,6 +16,7 @@ import django_heroku
 import firebase_admin
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
+from decouple import config
 from firebase_admin.messaging import Notification
 
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -45,6 +46,8 @@ INSTALLED_APPS = [
     'rest_framework.authtoken',
     'drf_generators',
     "fcm_django",
+    'django_extensions',
+
 ]
 
 MIDDLEWARE = [
@@ -60,7 +63,6 @@ MIDDLEWARE = [
 ROOT_URLCONF = 'backend.urls'
 AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
-    'backend.core.management.auth_backends.id_udesc_auth_backend.IDUdescAuthBackend',
 ]
 TEMPLATES = [
     {
@@ -86,12 +88,13 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'd9bje1eqb71cfu',
-        'PASSWORD': '16bf273588a01b6eb6e10ab3301bae7908601c794ee085293b8aa6fcb3e73ec6',
-        'HOST': 'ec2-52-70-205-234.compute-1.amazonaws.com',
-        'PORT': '5432',
-        'USER': 'sfzspyqjqymdgl',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'calenudesc_dev',
+        'PASSWORD': '123',
+        'HOST': '',
+        'PORT': '',
+        # 'USER': 'sfzspyqjqymdgl',
+        'USER': 'postgres',
     }
 }
 
@@ -146,3 +149,15 @@ FCM_DJANGO_SETTINGS = {
     "UPDATE_ON_DUPLICATE_REG_ID": True,
 }
 django_heroku.settings(locals())
+
+
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp-mail.outlook.com'
+EMAIL_HOST_USER = config("EMAIL_HOST_USER")
+EMAIL_HOST_PASSWORD = config("EMAIL_HOST_PASSWORD")
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+SERVER_EMAIL = EMAIL_HOST_USER
+INTITUTIONAL_EMAIL_SUFIX = 'edu.udesc.br'

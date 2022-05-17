@@ -1,0 +1,13 @@
+@startuml
+'https://plantuml.com/activity-diagram-beta
+
+start
+:Check token on device preferences;
+if (token on device preferences) then (false)
+:redirect to login page;
+:authenticate;
+endif
+:redirect to calendar page;
+stop
+
+@enduml
