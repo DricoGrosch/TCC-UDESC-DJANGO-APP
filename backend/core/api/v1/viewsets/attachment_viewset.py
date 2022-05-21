@@ -26,14 +26,12 @@ class AttachmentViewSet(LoginRequiredModelViewSet):
         if 'only_files' in self.request.query_params:
             _qs = queryset
             for attachment in _qs:
-                file_extensions = attachment.file.name.split('.')[-1]
-                if file_extensions in image_extensions:
+                if attachment.is_image():
                     queryset = queryset.exclude(id=attachment.id)
         if 'only_images' in self.request.query_params:
             _qs = queryset
             for attachment in _qs:
-                file_extensions = attachment.file.name.split('.')[-1]
-                if file_extensions not in image_extensions:
+                if not attachment.is_image():
                     queryset = queryset.exclude(id=attachment.id)
         return queryset
 

@@ -3,17 +3,23 @@
 autonumber 1
 
 activate User
-User --> Server: Sends authentication request
+    User --> Server: Sends account creation token request
+
 activate Server
-  Server --> IdUDESC: Send authentication request \n with credentials
+    Server --> Server: Validate the email provided by user
+    Server --> Server: Create AccountCreationToken
+    Server --> OutlookEmailServiceProvider: Send the account creation token
 
-activate IdUDESC
-  IdUDESC --> IdUDESC: Validate credentials
-  IdUDESC --> Server: Send authentication response
+activate OutlookEmailServiceProvider
+    User-->OutlookEmailServiceProvider: Retrieves the account creation token
+deactivate
 
-deactivate IdUDESC
-  Server --> Server: Create authentication token
-  Server --> User: Send response
-deactivate Server
-  User --> User: Set token on device preferences
+User-->Server: Sends the user account token for validation
+
+Server-->Server: Validates account token received from user
+Server-->User: Sends response
+User-->Server: Sends user creation data
+Server-->Server: Validates user existence
+Server-->Server: Creates user
+Server--> User: Sends response
 @enduml

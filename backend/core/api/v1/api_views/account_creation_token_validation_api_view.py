@@ -16,7 +16,7 @@ class AccountCreationTokenValidationAPIView(APIView):
     def post(self, *args, **kwargs):
         response = None
         try:
-            key = self.request.data.pop('token')
+            key = self.request.data['token']
             token = AccountCreationToken.objects.get(key=key)
             if not token.is_valid():
                 raise Exception('Token invalid')
