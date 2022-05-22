@@ -37,7 +37,6 @@ class EventTestCase(AuthenticatedTestCase):
             'date': '2020-02-02 08:00',
             'guide': 'added guide',
             'protocol': 'added protocol',
-
         })
         self.assertEqual(response.status_code, HTTP_200_OK)
         response_data = response.json()

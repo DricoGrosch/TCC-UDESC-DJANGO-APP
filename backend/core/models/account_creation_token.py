@@ -21,6 +21,10 @@ class AccountCreationToken(models.Model):
             self.key = self.generate_key()
         return super().save(*args, **kwargs)
 
+    @staticmethod
+    def is_email_allowed(email):
+        return email.split('@')[1] == settings.INTITUTIONAL_EMAIL_SUFIX
+
     def use(self):
         self.used = True
         self.save()
