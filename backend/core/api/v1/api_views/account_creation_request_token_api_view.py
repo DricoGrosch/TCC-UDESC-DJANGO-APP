@@ -10,7 +10,7 @@ from backend.core.models.account_creation_token import AccountCreationToken
 class AccountCreationRequestTokenAPIView(APIView):
     def post(self, *args, **kwargs):
         email = self.request.data.pop('email')
-        if email.split('@')[1] != settings.INTITUTIONAL_EMAIL_SUFIX:
+        if not AccountCreationToken.is_email_allowed(email):
             return Response({'error': 'Email provided is invalid'}, status=HTTP_401_UNAUTHORIZED)
         token = AccountCreationToken.objects.create(email=email).key
         send_mail(f'Token de criação de conta CALENUDESC', f'Este é o token para criação da sua conta {token}',

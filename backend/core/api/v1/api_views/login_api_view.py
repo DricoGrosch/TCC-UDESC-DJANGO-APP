@@ -14,6 +14,7 @@ class LoginAPIView(ObtainAuthToken):
             serializer = self.serializer_class(data=self.request.data, context={'request': self.request})
             serializer.is_valid(raise_exception=True)
             user = serializer.validated_data['user']
+            Token.objects.get_or_create(user=user)
             FCMDevice.objects.get_or_create(user=user, registration_id=device_token)
             response_dict ={**UserSerializer(user, context={"request": self.request}).data}
             return Response(response_dict,status=HTTP_200_OK)

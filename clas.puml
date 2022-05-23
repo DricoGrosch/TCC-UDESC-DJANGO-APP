@@ -9,6 +9,9 @@ class Event {
     +protocol: TextField
     +guide: TextField
     +all_members_can_edit: BooleanField
+    getAttachments():list
+    uploadtAttachment():event
+    deleteAttachment():boolean
 }
 
 class User {
@@ -17,17 +20,46 @@ class User {
 +last_name : CharField
 +email : CharField
 +date_joined : DateTimeField
++buildCalendar()
++setEventAsFavorite(Event event) : void
+
 }
 class Attachment {
     +file : File
     +upload_date : DateTimeField
+    +is_image(): boolean
 }
 class FavoriteEvent {
+}
+class AccountCreationToken{
++created_at:DateTimeField
++used models.BooleanField
++key:CharField
++email:CharField
++expiration_time_limit:IntegerField
+isValid(): boolean
+}
+class AuthToken{
++key:CharField
++created:DateTimeField
+generate_key()
+}
+class FirebaseMessagingDevice{
++device_id:CharField
++registration_id:CharField
++type:CharField
++name:CharField
++active:BooleanField
++date_created:DateTimeField
++send_message():void
 }
 Event <-- FavoriteEvent
 User <-- FavoriteEvent
 Event <-- Attachment
 Event <-- User
+FirebaseMessagingDevice <-- User
+AuthToken <-- User
+AccountCreationToken <-- User
 Event o-- User
 
 @enduml
