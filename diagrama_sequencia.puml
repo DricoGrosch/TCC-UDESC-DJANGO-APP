@@ -3,23 +3,23 @@
 autonumber 1
 
 activate User
-    User --> Server: Sends account creation token request
+    User --> Server: Envia a solicitação do token de criação de conta
 
 activate Server
-    Server --> Server: Validate the email provided by user
-    Server --> Server: Create AccountCreationToken
-    Server --> OutlookEmailServiceProvider: Send the account creation token
+    Server --> Server: Valida o email fornecido pelo usuário
+    Server --> Server: Cria o token para criação de conta
+    Server --> OutlookEmailServiceProvider: Envia o token para criação de conta
 
 activate OutlookEmailServiceProvider
-    User-->OutlookEmailServiceProvider: Retrieves the account creation token
+    User-->OutlookEmailServiceProvider: Busca o token para criação de conta
 deactivate
 
-User-->Server: Sends the user account token for validation
+User-->Server: Envia o token de criação de conta para ser validado
 
-Server-->Server: Validates account token received from user
-Server-->User: Sends response
-User-->Server: Sends user creation data
-Server-->Server: Validates user existence
-Server-->Server: Creates user
-Server--> User: Sends response
+Server-->Server: Valida o token para criação de conta
+Server-->User: Envia a resposta
+User-->Server: Envia os dados de criação de conta
+Server-->Server: Verifica a existência do usuário com o email fornecido
+Server-->Server: Cria o usuário
+Server--> User: Envia a resposta
 @enduml

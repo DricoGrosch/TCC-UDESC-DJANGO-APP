@@ -2,12 +2,12 @@
 'https://plantuml.com/activity-diagram-beta
 
 start
-:Check token on device preferences;
-if (token on device preferences) then (false)
-:redirect to login page;
-:authenticate;
+:Verifica se o token está nas preferências do dispositivo;
+if (token está nas preferências) then (false)
+:redireciona para o login page;
+:realiza a autenticação;
 endif
-:redirect to calendar page;
+:redireciona para a página do calendário;
 stop
 
 @enduml

@@ -30,6 +30,7 @@ class Attachment {
     +is_image(): boolean
 }
 class FavoriteEvent {
++send_notification()
 }
 class AccountCreationToken{
 +created_at:DateTimeField
