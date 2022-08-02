@@ -3,9 +3,13 @@
 
 start
 :Verifica se o token está nas preferências do dispositivo;
-if (token está nas preferências) then (false)
-:redireciona para o login page;
+if (token está nas preferências) then (não)
+:redireciona para a página de login;
 :realiza a autenticação;
+
+else (sim)
+:atualiza os dados do usuário;
+
 endif
 :redireciona para a página do calendário;
 stop

@@ -5,7 +5,7 @@ from backend.core.api.v1.viewsets.login_required_model_viewset import LoginRequi
 
 
 class UserViewSet(LoginRequiredModelViewSet):
-    queryset = get_user_model().objects.order_by('pk')
+    queryset = get_user_model().objects.filter(is_superuser=False).order_by('pk')
     serializer_class = UserSerializer
 
 
